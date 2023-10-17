@@ -1,0 +1,417 @@
+@import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap");
+
+:root {
+  --bg-color: #f5f5f7;
+  --text-color: #040504;
+  --primary-color: #ebebed;
+  --secondary-color: #fefefe;
+  --box-shadow-color: #e0e0e2;
+  --brightness: 0.96;
+  --green: #467865;
+  --red: #a84242;
+  --white: #ebebed;
+}
+
+.dark {
+  --bg-color: #212121;
+  --text-color: #f5f5f7;
+  --primary-color: #2b2b2b;
+  --secondary-color: #262626;
+  --box-shadow-color: #252524;
+  --brightness: 0.34;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Inclusive Sans", sans-serif;
+}
+
+body {
+  background: var(--bg-color);
+}
+
+.about-me {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  box-shadow: 5px 5px 5px var(--box-shadow-color);
+  width: 85%;
+  padding: 30px 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 8px;
+}
+
+.about-me-data {
+  align-self: center;
+  width: 60%;
+}
+
+.avatar {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+nav {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  margin: 5px;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+#toggle-dark {
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  fill: var(--text-color);
+}
+
+.active {
+  border-bottom: 1px solid var(--text-color);
+}
+
+.logo img {
+  width: 30px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+}
+
+.hero {
+  background-image: url("assets/hero.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 90%;
+  height: 600px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 5px var(--box-shadow-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.hero-brightness {
+  backdrop-filter: brightness(var(--brightness));
+  width: 100%;
+  height: 100%;
+}
+
+.hero-text {
+  margin: 5em;
+  position: absolute;
+}
+
+.hero-text.dark {
+  color: #ebebed;
+}
+
+.quote {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 50px 0;
+  min-height: 180px;
+}
+
+.quote-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 8px;
+  width: 65%;
+}
+
+.quote-text {
+  font-size: 20px;
+}
+.quote-person {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quote-person-name span {
+  color: #727373;
+  font-size: 11px;
+}
+
+.quote-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  padding: 20px;
+  filter: brightness(0.8) grayscale(50%);
+}
+
+.product {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.product-wrapper {
+  width: 90%;
+}
+
+.product-items {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 22px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.item {
+  width: 250px;
+  height: 350px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 5px 5px 5px var(--box-shadow-color);
+  padding: 20px;
+  margin: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item:hover {
+  transition: transform 0.3s;
+  transform: scale(1.05);
+}
+
+.item-type {
+  color: #727373;
+}
+
+.item-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+}
+
+.item-buy {
+  width: 100%;
+  background: var(--primary-color);
+  padding: 8px 0;
+  border-radius: 8px;
+  text-align: center;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+footer {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+footer.dark {
+  background-color: #313131 !important;
+  color: white;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+}
+
+.product-form-wrapper {
+  margin: 50px 0;
+  padding: 20px;
+  width: 60%;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.form-item {
+  margin: 15px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-input {
+  width: 80%;
+  height: 100%;
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 5px;
+  border-radius: 8px;
+  border: none;
+}
+
+.form-label {
+  width: 30%;
+  display: inline-block;
+}
+
+.btn {
+  width: 50%;
+  background: var(--primary-color);
+  color: var(--text-color);
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transition: transform 0.3s;
+  transform: scale(1.05);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.product-table-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  background: var(--secondary-color);
+  width: 95%;
+  padding: 20px;
+}
+
+.product-table {
+  width: 100%;
+  text-align: center;
+}
+
+.product-id {
+  width: 100px;
+}
+
+.product-image {
+  width: 96px;
+}
+
+.product-image-preview {
+  box-shadow: 5px 5px 5px var(--box-shadow-color);
+  padding: 20px;
+  width: 200px;
+  height: 250px;
+  object-fit: contain;
+  justify-self: center;
+}
+
+.green {
+  background: var(--green);
+  color: var(--white);
+}
+
+.red {
+  background: var(--red);
+  color: var(--white);
+}
+
+@media only screen and (max-width: 768px) {
+  .hero {
+    width: 100%;
+    height: 600px;
+    background-size: 1000px 100%;
+    background-position: 3%;
+  }
+
+  .quote-content {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .quote-text {
+    font-size: 11px;
+  }
+
+  .quote-person-name {
+    font-size: 13px;
+  }
+  .quote-person-name span {
+    font-size: 8px;
+  }
+
+  .quote-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .about-me {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-me-data {
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  .product-form-wrapper {
+    width: 90%;
+  }
+
+  .product-form {
+    width: 100%;
+  }
+
+  main {
+    margin: 0;
+  }
+  .product-table-wrapper {
+    padding: 5px;
+    width: 100%;
+  }
+
+  .product-image {
+    width: 48px;
+  }
+
+  .product-table {
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+  }
+}
