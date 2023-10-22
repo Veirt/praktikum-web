@@ -105,15 +105,18 @@ if (isset($_POST["create"])) {
   $file_format_name = date("Y-m-d") . " " . $product_name . "." . $file_type;
   $target_file_name = $target_file_dir . $file_format_name;
 
-  $result = mysqli_query($connection, "INSERT INTO products (name, type, price, image_path) VALUES ('$product_name', '$product_type', '$product_price', '$target_file_name')");
-  if (!$result) {
-    echo "<script>alert('Gagal menambahkan produk!')</script>";
-    return;
-  } else {
+  $stmt = mysqli_prepare($connection, "INSERT INTO products (name, type, price, image_path) VALUES (?, ?, ?, ?)");
+  mysqli_stmt_bind_param($stmt, "ssds", $product_name, $product_type, $product_price, $target_file_name);
+
+  if (mysqli_stmt_execute($stmt)) {
+    @move_uploaded_file($temp_file_name, $target_file_name);
     echo "<script>alert('Berhasil menambahkan produk!')</script>";
-    echo "<script>document.location = 'dashboard.php' </script>";
+  } else {
+    echo "<script>alert('Gagal menambahkan produk!')</script>";
   }
 
-  @move_uploaded_file($temp_file_name, $target_file_name);
+  mysqli_stmt_close($stmt);
+
+  echo "<script>document.location = 'dashboard.php' </script>";
 }
 ?>

@@ -45,26 +45,35 @@ if (isset($_POST["update"])) {
         $file_format_name = date("Y-m-d") . " " . $product_name . "." . $file_type;
         $target_file_name = $target_file_dir . $file_format_name;
 
-        $old_image = mysqli_fetch_assoc(mysqli_query($connection, "SELECT image_path FROM products WHERE id='$id'"))['image_path'];
+        $select_stmt = mysqli_prepare($connection, "SELECT image_path FROM products WHERE id = ?");
+        mysqli_stmt_bind_param($select_stmt, "i", $id);
+        mysqli_stmt_execute($select_stmt);
+        $result = mysqli_stmt_get_result($select_stmt);
+        $old_image = mysqli_fetch_assoc($result)['image_path'];
+        mysqli_stmt_close($select_stmt);
         if (file_exists($old_image)) {
             unlink($old_image);
         }
 
-        $result = mysqli_query($connection, "UPDATE products SET name='$product_name', type='$product_type', price='$product_price', image_path='$target_file_name' WHERE id='$id'");
+        $update_stmt = mysqli_prepare($connection, "UPDATE products SET name=?, type=?, price=?, image_path=? WHERE id=?");
+        mysqli_stmt_bind_param($update_stmt, "ssisi", $product_name, $product_type, $product_price, $target_file_name, $id);
     } else {
-        $result = mysqli_query($connection, "UPDATE products SET name='$product_name', type='$product_type', price='$product_price'  WHERE id='$id'");
+        $update_stmt = mysqli_prepare($connection, "UPDATE products SET name=?, type=?, price=? WHERE id=?");
+        mysqli_stmt_bind_param($update_stmt, "ssii", $product_name, $product_type, $product_price, $id);
     }
 
 
-    if (!$result) {
+    if (mysqli_stmt_execute($update_stmt)) {
+        @move_uploaded_file($temp_file_name, $target_file_name);
+        echo "<script>alert('Berhasil memperbarui produk!')</script>";
+    } else {
         echo "<script>alert('Gagal memperbarui produk!')</script>";
         return;
-    } else {
-        echo "<script>alert('Berhasil memperbarui produk!')</script>";
-        echo "<script>document.location = 'dashboard.php' </script>";
     }
+    mysqli_stmt_close($update_stmt);
 
-    @move_uploaded_file($temp_file_name, $target_file_name);
+
+    echo "<script>document.location = 'dashboard.php' </script>";
 }
 ?>
 
@@ -72,13 +81,17 @@ if (isset($_POST["update"])) {
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $result = mysqli_query($connection, "SELECT * FROM products WHERE id = '$id'");
+
+    $select_stmt = mysqli_prepare($connection, "SELECT * FROM products WHERE id = ?");
+    mysqli_stmt_bind_param($select_stmt, "i", $id);
+    mysqli_stmt_execute($select_stmt);
+    $result = mysqli_stmt_get_result($select_stmt);
     $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($select_stmt);
 
     if (!$row) {
         echo "<script>alert('Produk tidak ditemukan!')</script>";
         echo "<script>document.location = 'dashboard.php'</script>";
-        return;
     }
 }
 ?>

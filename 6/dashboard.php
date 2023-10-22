@@ -75,18 +75,27 @@
 if (isset($_POST["delete"])) {
 	$id = $_POST["id"];
 
-	$old_image = mysqli_fetch_assoc(mysqli_query($connection, "SELECT image_path FROM products WHERE id = '$id'"))["image_path"];
-	$result = mysqli_query($connection, "DELETE FROM products WHERE id = '$id'");
+	$select_stmt = mysqli_prepare($connection, "SELECT image_path FROM products WHERE id = ?");
+	mysqli_stmt_bind_param($select_stmt, "i", $id);
+	mysqli_stmt_execute($select_stmt);
+	$result = mysqli_stmt_get_result($select_stmt);
+	$old_image = mysqli_fetch_assoc($result)['image_path'];
+	mysqli_stmt_close($select_stmt);
 
-	if (file_exists($old_image)) {
-		unlink($old_image);
-	}
+	$delete_stmt = mysqli_prepare($connection, "DELETE FROM products WHERE id = ?");
+	mysqli_stmt_bind_param($delete_stmt, "i", $id);
+	$delete_result = mysqli_stmt_execute($delete_stmt);
 
-	if (!$result) {
-		echo "<script>alert('Gagal menghapus produk.')</script>";
-	} else {
+	if ($delete_result) {
+		if (file_exists($old_image)) {
+			unlink($old_image);
+		}
 		echo "<script>alert('Berhasil menghapus produk.')</script>";
-		echo "<script>document.location = 'dashboard.php'</script>";
+	} else {
+		echo "<script>alert('Gagal menghapus produk.')</script>";
 	}
+
+	mysqli_stmt_close($delete_stmt);
+	echo "<script>document.location = 'dashboard.php'</script>";
 }
 ?>
